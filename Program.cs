@@ -2,11 +2,31 @@
 using System.Linq;
 
 public class BaseTools {
+	public static int [] CreateRandomArray(int size, int min, int max){
+		int [] array = new int [size];
+		for(int i = 0; i<size; i++){
+			array[i] = new Random().Next(min, max+1);
+		}
+		return array;
+	}
+	public static void ShowArray(int [] array){
+		foreach(int e in array){
+			Console.Write($"{e} ");
+		}
+	}
 	
 }
 public class tasks{
-	static public void task1()
-	{
+	static public void task1(){
+		
+	}
+	static public void task2(){
+		
+	}
+	static public void task3(){
+		
+	}
+	static public void task4(){
 		
 	}
 }
@@ -30,14 +50,11 @@ public class Menu {
             case 1:
                 tasks.task1();break;
             case 2:
-				
-                break;
+				tasks.task2();break;
             case 3:
-				
-				break;
+				tasks.task3();break;
 			case 4:
-				
-				break;
+				tasks.task4();break;
 			default:
                 Console.WriteLine("--ВЫХОД НА 0--");
             break;
@@ -53,14 +70,13 @@ public class Menu {
 			a = PlayMenu();
 		}
 		GO_to_task(a);
-		
-		
-		do{
-			a = PlayMenu();
-			GO_to_task(a);
-		}while(a!=0);
+		if(a!=0){
+			do{
+				a = PlayMenu();
+				GO_to_task(a);
+			}while(a!=0);
+		}
 		Console.Clear();
 		Console.WriteLine("Программа завершена");
-
     }
 }
