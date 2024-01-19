@@ -91,7 +91,7 @@ public class Menu {
 		int n=0;
 		Console.Clear();	
 		Console.WriteLine("--MENU--");
-		Console.WriteLine("Задачи представленны по коду 1-4");
+		Console.WriteLine("Задачи представленны по коду 1-3");
 		Console.WriteLine("Выход по коду 0");
 		Console.Write("Введите код задания: ");
         string str = Console.ReadLine();
