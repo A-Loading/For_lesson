@@ -20,7 +20,7 @@ public class BaseTools {
 			case 1:
 				Console.WriteLine("Введите число чтобы продолжить или q для выхода");
 				Console.WriteLine("");
-			break;
+			break;			
 		}
 	}
 	public static bool SumDigitsIsEven(int num){//СУМ ЦИФР ЧЁТНА?
@@ -76,10 +76,50 @@ public class tasks{
 		Thread.Sleep(3000);//чтобы увидеть результат
 	}
 	static public void task2(){
-		
+		int[] array = BaseTools.CreateRandomArray(5,100,999);
+		BaseTools.ShowArray(array);
+		int num = 0;
+		for (int i=0;i<array.Length;i++){
+			if(array[i]%2==0){
+				num++;
+			}
+		}
+		Console.WriteLine("");
+		Console.WriteLine($"Количество чётных элементов масива = {num} элементов.");
+		Thread.Sleep(7000);
 	}
 	static public void task3(){
+		ReturnT3:
+		Console.Write("Введите количество элементов масива :");
+		string S_num = Console.ReadLine();
+		Console.Clear();
+		int I_num;
 		
+		if(int.TryParse(S_num, out I_num)){//проверка на буквы
+		
+			if(I_num<1 || I_num>8){//вне диапозона -1 или 9
+				Console.WriteLine($"${S_num} :должна быть в диопазоне [1..8]");
+				goto ReturnT3;//второй шанс
+			}
+			
+			else{// ВСЕ условия соблюдены
+				int[] array = BaseTools.CreateRandomArray(I_num,0,9);
+				BaseTools.ShowArray(array);
+				
+				I_num = 0;//перезапись
+				for (int i =0; i<array.Length;i++){
+					I_num=(I_num*10)+array[i];
+				}
+				Console.Write($" => [{I_num}]");
+				Thread.Sleep(7000);
+				return;
+			}
+			
+		}
+		else{//проверка на буквы ПРОВАЛ
+			Console.WriteLine($"${S_num} :не является целым числом.");
+			goto ReturnT3;//второй шанс
+		}
 	}
 	static public void task4(){
 		
