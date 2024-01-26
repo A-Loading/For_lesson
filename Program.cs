@@ -10,17 +10,30 @@ public class BaseTools {
 		}
 		return array;
 	}
-	public static void ShowArray(int [] array){
-		foreach(int e in array){
-			Console.Write($"{e} ");
+	public static void ShowArray(char [] array){
+		for (int e=0; e<array.Length; e++ ){
+			Console.Write($"[{array[e]}] ");
 		}
+	Console.WriteLine(";");
 	}
 	public static void ShowMesgTasks(int trash){//для повторяющихся сообщений
 		switch (trash){
 			case 1:
-				Console.WriteLine("Введите число чтобы продолжить или q для выхода");
-				Console.WriteLine("");
-			break;			
+				Console.Write($"Введите строку:");
+				// Console.WriteLine("");
+			break;
+			case 2:
+				Console.WriteLine("вводится строка и положение слов реверсируется");
+				 Console.WriteLine("");
+			break;
+			case 3:
+				Console.WriteLine("вводится строка и проверяется является ли слово полиндромом");
+				 Console.WriteLine("как пример полиндрома: 'шалаш','дед','радар' ");
+			break;
+			case 4:
+				Console.WriteLine("вводится строка и заглавные преобразуются в строчные");
+				 Console.WriteLine("как пример: 'ШаЛаш1' => 'шалаш1'");
+			break;
 		}
 	}
 	public static bool SumDigitsIsEven(int num){//СУМ ЦИФР ЧЁТНА?
@@ -42,87 +55,138 @@ public class BaseTools {
 		
 		return(even);
 	}
+	public static char [] String_T_C(string INpt){
+		char[] Out =new char[INpt.Length];
+		for(int i=0;i<INpt.Length;i++){
+		Out[i]=INpt[i];	
+		}
+		return(Out);
+	}
+	public static string CharArr_T_S(char [] INpt){
+		string Out = "";
+		foreach(char e in INpt){
+			Out += e;
+		}
+		return(Out);
+	}
 }
+
 public class tasks{
 	static public void task1(){
-		BaseTools.ShowMesgTasks(1);// подсказка
-		string S_num = Console.ReadLine();
-		string memory="";//не хотел но пришлось иначе на другую сроку при вводе перекидывало
-		while(S_num != "q"){
-			int I_num;
-			Console.Clear();// чтобы ввод не мешал
-			if(int.TryParse(S_num, out I_num)){
-				if(BaseTools.SumDigitsIsEven(I_num)){
-					S_num = "q";//выход 
-				}
-				else
-				{
-					memory=$"{memory}[{S_num}] ";//не хотел но пришлось иначе на другую сроку при вводе перекидывало
-					BaseTools.ShowMesgTasks(1);// подсказка для тех кто забудет
-					Console.Write($"{memory} ");
-					S_num = Console.ReadLine();
-				}
-			}
-			else
-			{	
-				BaseTools.ShowMesgTasks(1);
-				Console.Write($"--ERR1 введено {S_num}--");
-				S_num = Console.ReadLine();
-			}
-		}
-		Console.Clear();// чтобы ввод не мешал
-		// BaseTools.ShowMesgTasks(1);
-		Console.Write($"{memory}[STOP]");
-		Thread.Sleep(3000);//чтобы увидеть результат
-	}
-	static public void task2(){
-		int[] array = BaseTools.CreateRandomArray(5,100,999);
-		BaseTools.ShowArray(array);
-		int num = 0;
-		for (int i=0;i<array.Length;i++){
-			if(array[i]%2==0){
-				num++;
-			}
+		char[,] array = new char[,]{
+                {'П','р','и','в','е','т'},
+                {' ','м','и','р','.','√'}
+            };
+		string anser = "";
+		foreach(char e in array){
+			Console.Write($"[{e}]");
+			anser += e;
 		}
 		Console.WriteLine("");
-		Console.WriteLine($"Количество чётных элементов масива = {num} элементов.");
-		Thread.Sleep(7000);
+		Console.WriteLine(anser);
+		Thread.Sleep(7000);//чтобы увидеть результат
+	}
+	static public void task2(){
+		
+		BaseTools.ShowMesgTasks(4);
+ 		BaseTools.ShowMesgTasks(1);
+		string str = Console.ReadLine();
+		char[] str_Rewrite = BaseTools.String_T_C(str);
+		// Console.WriteLine(str);
+		// BaseTools.ShowArray(str_Rewrite);
+		
+		for (int i=0;i<str.Length;i++){
+			 int charID = str_Rewrite[i];//id of char in string
+			 
+			 // Console.WriteLine($"[{str_Rewrite[i]}][{charID}]- -[{charID>=1040}]&[{charID<=1071}]|[{65<=charID}]&[{charID<=90}]-");
+			 if( ((charID>=1040) && (charID<=1071)) || ((65<=charID) && (charID<=90)) ){//A-Z А-Я
+				
+				str_Rewrite[i] = Convert.ToChar(charID+32);
+				// Console.WriteLine($"{str_Rewrite[i]}[{charID+32}]");				
+				 
+			 }
+			 // Thread.Sleep(1000);
+		
+		}
+		// BaseTools.ShowArray(str_Rewrite);
+/*
+A-Z 65-90
+-32-
+a-z 97-122
+ 
+А-Я 1040-1071
+-32-
+а-я 1072-1103
+ 
+*/		
+		str= BaseTools.CharArr_T_S(str_Rewrite);
+		Console.WriteLine($"	-	-	-	-");
+		Console.Write($"		");
+		Console.WriteLine(str);
+		Thread.Sleep(8000);
+	
 	}
 	static public void task3(){
-		ReturnT3:
-		Console.Write("Введите количество элементов масива :");
-		string S_num = Console.ReadLine();
-		Console.Clear();
-		int I_num;
-		
-		if(int.TryParse(S_num, out I_num)){//проверка на буквы
-		
-			if(I_num<1 || I_num>8){//вне диапозона -1 или 9
-				Console.WriteLine($"${S_num} :должна быть в диопазоне [1..8]");
-				goto ReturnT3;//второй шанс
+	
+	BaseTools.ShowMesgTasks(3);
+	BaseTools.ShowMesgTasks(1);
+	string str = Console.ReadLine();
+	Console.WriteLine(str);
+	bool polyndrom = true;
+	if (str.Length == 0){
+		polyndrom = false;
+	}
+	else{
+		for(int beg =0;beg<str.Length/2;beg++){
+			if(str[beg] != str[str.Length-1-beg]){
+				polyndrom = false;
 			}
-			
-			else{// ВСЕ условия соблюдены
-				int[] array = BaseTools.CreateRandomArray(I_num,0,9);
-				BaseTools.ShowArray(array);
-				
-				I_num = 0;//перезапись
-				for (int i =0; i<array.Length;i++){
-					I_num=(I_num*10)+array[i];
-				}
-				Console.Write($" => [{I_num}]");
-				Thread.Sleep(7000);
-				return;
-			}
-			
-		}
-		else{//проверка на буквы ПРОВАЛ
-			Console.WriteLine($"${S_num} :не является целым числом.");
-			goto ReturnT3;//второй шанс
 		}
 	}
+	
+	
+	if(polyndrom)
+		{str = " подиндром";}
+	else
+		{str = " не подиндром";}
+	Console.WriteLine(str);
+	Thread.Sleep(5000);
+	return;
+	
+	}
 	static public void task4(){
+
+	BaseTools.ShowMesgTasks(2);
+	BaseTools.ShowMesgTasks(1);
+	string str = Console.ReadLine();
+	if(str.Length>1){
+		string str_Rewrite = "";
 		
+		int back = str.Length-1;//реверс по строке
+		
+		for (int i=0;i<str.Length;i++){
+			if(char.IsLetter(str[i])){
+				while(i+1<str.Length && char.IsLetter(str[i+1])){i++;}//пропуск слова
+					while(back >= 0 && !char.IsLetter(str[back])){back --;}//в реверсивном пропуск 12!"№
+					while(back >= 0 && char.IsLetter(str[back])){back --;}//в реверсивном пропуск слова
+				int forward = back + 1 ;// меняем движ, по направлению, в реверсивном   
+					while( forward<str.Length && char.IsLetter(str[forward]) ){//в реверсивном пишет слово
+						str_Rewrite += str[forward];
+						forward++;
+					}
+			}
+			else{
+				str_Rewrite +=str[i];
+			}
+			
+			// Console.WriteLine($"[{i}]{str[i]}");// что ?
+		}
+		
+		
+		str=str_Rewrite;
+	}
+	Console.WriteLine(str);		
+	Thread.Sleep(8000);
 	}
 }
 public class Menu {
@@ -131,7 +195,7 @@ public class Menu {
 		int n=0;
 		Console.Clear();	
 		Console.WriteLine("--MENU--");
-		Console.WriteLine("Задачи представленны по коду 1-3");
+		Console.WriteLine("Задачи представленны по коду 1-4");
 		Console.WriteLine("Выход по коду 0");
 		Console.Write("Введите код задания: ");
         string str = Console.ReadLine();
