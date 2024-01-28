@@ -10,7 +10,7 @@ public class BaseTools {
 		}
 		return array;
 	}
-	public static void ShowArray(char [] array){
+	public static void ShowArray(int [] array){
 		for (int e=0; e<array.Length; e++ ){
 			Console.Write($"[{array[e]}] ");
 		}
@@ -19,12 +19,15 @@ public class BaseTools {
 	public static void ShowMesgTasks(int trash){//для повторяющихся сообщений
 		switch (trash){
 			case 1:
-				Console.Write($"Введите строку:");
+				Console.WriteLine($"Вводится 2 числа и выводятся все натуральные числа в промежутке");
 				// Console.WriteLine("");
 			break;
 			case 2:
-				Console.WriteLine("вводится строка и положение слов реверсируется");
-				 Console.WriteLine("");
+				Console.WriteLine("Вводится 2 числа и проводятся через функцию Аккермана");
+				 Console.WriteLine("	┌	n+1		m=0;");
+				 Console.WriteLine("a(m,n)=	┤	A(m-1,1)	m>0,n=0;");
+				 Console.WriteLine("	└	A(m-1,A(m,n-1))	m>0,n>0.");
+				 Console.Write("Введите m:");
 			break;
 			case 3:
 				Console.WriteLine("вводится строка и проверяется является ли слово полиндромом");
@@ -71,88 +74,86 @@ public class BaseTools {
 	}
 }
 
+public class Recursion {
+	public static void ShowNaturalNumbers(int m, int n){
+		if (m==n){
+			return;
+		}
+		
+		Console.Write($"{m} ");
+		ShowNaturalNumbers(m+1,n);
+	}
+	public static int Ackerman(int m, int n){
+		if (m == 0){
+			return n + 1;
+		}
+		
+		else if (n == 0){
+			return Ackerman(m - 1, 1);
+		}
+		
+		else{
+			return Ackerman(m - 1, Ackerman(m, n - 1));
+		}
+	}
+	public static void ShowArray(int [] array,int i=0){
+		if(i>=array.Length){
+			return;
+		}
+		// Console.Write($"[{array[i]}][{i}][{i>=array.Length}]");
+		ShowArray(array,i+1);
+		Console.Write($"[{array[i]}] ");
+	}
+}
+
 public class tasks{
 	static public void task1(){
-		char[,] array = new char[,]{
-                {'П','р','и','в','е','т'},
-                {' ','м','и','р','.','√'}
-            };
-		string anser = "";
-		foreach(char e in array){
-			Console.Write($"[{e}]");
-			anser += e;
+ 		BaseTools.ShowMesgTasks(1);
+		
+		Console.WriteLine("Введите 1 число:");
+		int num1 = int.Parse(Console.ReadLine());
+		
+		Console.WriteLine("Введите 2 число:");
+		int num2 = int.Parse(Console.ReadLine());
+		
+		int memory =0;
+		
+		if (num1>num2){
+			memory=num1;
+			num1=num2;
+			num2=memory;
 		}
-		Console.WriteLine("");
-		Console.WriteLine(anser);
+		num1++;
+		Recursion.ShowNaturalNumbers(num1,num2);
+		
 		Thread.Sleep(7000);//чтобы увидеть результат
 	}
 	static public void task2(){
 		
-		BaseTools.ShowMesgTasks(4);
- 		BaseTools.ShowMesgTasks(1);
-		string str = Console.ReadLine();
-		char[] str_Rewrite = BaseTools.String_T_C(str);
-		// Console.WriteLine(str);
-		// BaseTools.ShowArray(str_Rewrite);
+ 		BaseTools.ShowMesgTasks(2);
+		int m = int.Parse(Console.ReadLine());
 		
-		for (int i=0;i<str.Length;i++){
-			 int charID = str_Rewrite[i];//id of char in string
-			 
-			 // Console.WriteLine($"[{str_Rewrite[i]}][{charID}]- -[{charID>=1040}]&[{charID<=1071}]|[{65<=charID}]&[{charID<=90}]-");
-			 if( ((charID>=1040) && (charID<=1071)) || ((65<=charID) && (charID<=90)) ){//A-Z А-Я
-				
-				str_Rewrite[i] = Convert.ToChar(charID+32);
-				// Console.WriteLine($"{str_Rewrite[i]}[{charID+32}]");				
-				 
-			 }
-			 // Thread.Sleep(1000);
+		Console.Write("Введите n:");
+		int n = int.Parse(Console.ReadLine());
 		
+		if(m<0 || n<0){
+			Console.WriteLine("ERR: Переменные не положительны");
 		}
-		// BaseTools.ShowArray(str_Rewrite);
-/*
-A-Z 65-90
--32-
-a-z 97-122
- 
-А-Я 1040-1071
--32-
-а-я 1072-1103
- 
-*/		
-		str= BaseTools.CharArr_T_S(str_Rewrite);
-		Console.WriteLine($"	-	-	-	-");
-		Console.Write($"		");
-		Console.WriteLine(str);
+		else{
+			m = Recursion.Ackerman(m,n);
+			Console.WriteLine($"A(m,n) = {m}");
+		}
+		
 		Thread.Sleep(8000);
 	
 	}
 	static public void task3(){
-	
-	BaseTools.ShowMesgTasks(3);
-	BaseTools.ShowMesgTasks(1);
-	string str = Console.ReadLine();
-	Console.WriteLine(str);
-	bool polyndrom = true;
-	if (str.Length == 0){
-		polyndrom = false;
-	}
-	else{
-		for(int beg =0;beg<str.Length/2;beg++){
-			if(str[beg] != str[str.Length-1-beg]){
-				polyndrom = false;
-			}
-		}
-	}
-	
-	
-	if(polyndrom)
-		{str = " подиндром";}
-	else
-		{str = " не подиндром";}
-	Console.WriteLine(str);
-	Thread.Sleep(5000);
-	return;
-	
+	int[] array = BaseTools.CreateRandomArray(10,0,9);
+	BaseTools.ShowArray(array);//вывод
+	Thread.Sleep(1000);
+	Recursion.ShowArray(array);//вывод рекурсия
+	Thread.Sleep(10000);
+
 	}
 	static public void task4(){
 
@@ -195,10 +196,11 @@ public class Menu {
 		int n=0;
 		Console.Clear();	
 		Console.WriteLine("--MENU--");
-		Console.WriteLine("Задачи представленны по коду 1-4");
+		Console.WriteLine("Задачи представленны по коду 1-3");
 		Console.WriteLine("Выход по коду 0");
 		Console.Write("Введите код задания: ");
-        string str = Console.ReadLine();
+		string str ="";
+        str = Console.ReadLine();
         n = int.Parse(str);
 		Console.Clear();
 		return(n);
